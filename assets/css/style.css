@@ -178,10 +178,6 @@ a:hover {
   0%, 49% { border-color: var(--accent); }
   50%, 100% { border-color: transparent; }
 }
-@keyframes demoScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
 .hero-ctas {
   display: flex;
   gap: 14px;
@@ -258,45 +254,10 @@ a:hover {
 .dot-red { background: #ef6a6a; }
 .dot-yellow { background: #f4c95d; }
 .dot-green { background: #4ade80; }
-.demo-tabs {
-  display: flex;
-  gap: 16px;
-  margin-left: 20px;
-}
-.demo-tab {
-  cursor: pointer;
-  font-size: 12px;
-  color: var(--dim);
-  border-bottom: 2px solid transparent;
-  padding-bottom: 2px;
-  background: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  font-family: inherit;
-}
-.demo-tab.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
-.demo-scroll {
-  overflow: hidden;
-}
-.demo-track {
-  display: flex;
-  width: max-content;
-  animation: demoScroll 24s linear infinite;
-}
-.demo-track img {
+.demo-video {
   display: block;
-  width: 1000px;
+  width: 100%;
   height: auto;
-  flex: 0 0 auto;
-}
-@media (prefers-reduced-motion: reduce) {
-  .demo-track {
-    animation: none;
-  }
 }
 
 /* Features */
@@ -312,6 +273,7 @@ a:hover {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 24px;
+  min-height: 300px;
 }
 .feature-icon {
   font-size: 26px;
@@ -337,15 +299,23 @@ a:hover {
   color: var(--accent);
   margin-bottom: 10px;
 }
+.compare-table {
+  display: grid;
+  grid-template-columns: minmax(0, 48%) 1fr;
+  column-gap: 12px;
+  row-gap: 6px;
+}
 .compare-row {
-  display: flex;
-  justify-content: space-between;
+  display: contents;
   color: var(--muted);
   font-size: 12.5px;
+}
+.compare-row span {
   padding: 3px 0;
 }
 .compare-row span:last-child {
   color: var(--accent);
+  text-align: right;
 }
 
 /* Install */
@@ -354,49 +324,35 @@ a:hover {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-.install-tab {
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
-}
-.install-tab.active {
-  border-color: var(--accent);
-}
-.install-tab-header {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 12px 16px;
-  background: var(--panel);
-  border: none;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text);
-  cursor: pointer;
-}
-.install-tab.active .install-tab-header {
-  color: var(--accent);
-}
-.install-tab-body {
-  display: none;
-  padding: 14px 16px;
-  background: var(--panel-alt);
-}
-.install-tab.active .install-tab-body {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  gap: 16px;
 }
 .install-command {
   margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
   font-family: inherit;
   font-size: 12.5px;
   color: var(--accent-text);
   white-space: pre-wrap;
   word-break: break-all;
+}
+.download-panel {
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.download-panel-header {
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.download-panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 12px 12px;
 }
 .download-card {
   border: 1px solid var(--border);

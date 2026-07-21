@@ -55,24 +55,21 @@
     });
   }
 
-  // ---- Demo screenshot tabs (highlight only; filmstrip auto-scrolls) ----
-  var demoTabs = document.querySelectorAll('.demo-tab');
-  demoTabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      demoTabs.forEach(function (t) { t.classList.remove('active'); });
-      tab.classList.add('active');
-    });
-  });
-
-  // ---- Install accordion ----
-  var installTabs = document.querySelectorAll('.install-tab');
-  installTabs.forEach(function (tab) {
-    var header = tab.querySelector('.install-tab-header');
-    header.addEventListener('click', function () {
-      installTabs.forEach(function (t) { t.classList.remove('active'); });
-      tab.classList.add('active');
-    });
-  });
+  // ---- Demo video: force mute (autoplay policy) and 1.5x playback ----
+  var demoVideo = document.getElementById('demo-video');
+  if (demoVideo) {
+    var forceMute = function () {
+      demoVideo.muted = true;
+      demoVideo.defaultMuted = true;
+      demoVideo.volume = 0;
+    };
+    var setSpeed = function () { demoVideo.playbackRate = 1.5; };
+    forceMute();
+    demoVideo.addEventListener('loadedmetadata', function () { forceMute(); setSpeed(); });
+    demoVideo.addEventListener('play', function () { forceMute(); setSpeed(); });
+    demoVideo.addEventListener('volumechange', forceMute);
+    demoVideo.play().catch(function () {});
+  }
 
   // ---- FAQ accordion ----
   var faqItems = document.querySelectorAll('.faq-item');

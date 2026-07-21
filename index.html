@@ -55,19 +55,8 @@
         <div class="dot dot-red"></div>
         <div class="dot dot-yellow"></div>
         <div class="dot dot-green"></div>
-        <div class="demo-tabs">
-          <button class="demo-tab active" data-index="0">Namespace severity table</button>
-          <button class="demo-tab" data-index="1">Resource tree (dynamic CRD tabs)</button>
-        </div>
       </div>
-      <div class="demo-scroll">
-        <div class="demo-track" id="demo-track">
-          <img src="assets/screenshots/demo-namespaces.png" alt="Namespace severity table">
-          <img src="assets/screenshots/demo-tree.png" alt="Resource tree (dynamic CRD tabs)">
-          <img src="assets/screenshots/demo-namespaces.png" alt="Namespace severity table" aria-hidden="true">
-          <img src="assets/screenshots/demo-tree.png" alt="Resource tree (dynamic CRD tabs)" aria-hidden="true">
-        </div>
-      </div>
+      <video id="demo-video" class="demo-video" src="assets/screenshots/k8s-rizz-check-demo-noaudio.mp4" loop playsinline autoplay muted></video>
     </div>
   </section>
 
@@ -78,51 +67,43 @@
       <div class="feature-card">
         <div class="feature-icon">🔍</div>
         <div class="feature-title">Auto-detects providers</div>
-        <div class="feature-desc">Finds every cluster you're already logged into — starting with GKE via your existing gcloud login, no separate credentials to manage.</div>
+        <div class="feature-desc">Finds every cluster you're already logged into across GKE, EKS, AKS, K3s, and personal clusters — zero config.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🌡️</div>
         <div class="feature-title">Severity at a glance</div>
-        <div class="feature-desc">Rizzing, Mid, No Rizz, Cooked — one 3-tier good/warn/bad model used everywhere, so you can scan a cluster's health at a glance.</div>
+        <div class="feature-desc">Rizzing, Mid, No Rizz, Cooked — click any status to instantly filter to the namespaces that need you.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🧩</div>
-        <div class="feature-title">Live resource tree</div>
-        <div class="feature-desc">Every namespaced Kind that actually exists in the cluster — core resources and CRDs — shown automatically, with ownership chains resolved so a crash-looping Pod turns its parent Deployment red too.</div>
+        <div class="feature-title">Dynamic CRD discovery</div>
+        <div class="feature-desc">Finds every resource kind live from your cluster's API, including CRDs — no hardcoded resource list to fall behind.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🖥️</div>
-        <div class="feature-title">Node observability</div>
-        <div class="feature-desc">Cluster-wide summary — total/ready/conditions/CPU/memory/pods — plus an expandable per-node table. Click any node for Status, YAML, and a Cook Book.</div>
+        <div class="feature-title">Node health, up front</div>
+        <div class="feature-desc">Ready state, pressure conditions, and real utilization vs. allocatable — not raw capacity.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">📜</div>
         <div class="feature-title">Status, YAML & logs</div>
-        <div class="feature-desc">Drill into any resource's status fields, full YAML, real namespace Events (newest first), and container logs — with a picker for multi-container Pods.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔗</div>
-        <div class="feature-title">Refresh-proof state</div>
-        <div class="feature-desc">The URL restores exactly where you were — refresh the page and you're back in the same namespace, resource, and panel.</div>
-      </div>
-      <div class="feature-card compare-card">
-        <div class="feature-icon">⚖️</div>
-        <div class="compare-title">vs. paid tools</div>
-        <div class="compare-row"><span>Price</span><span>Free forever</span></div>
-        <div class="compare-row"><span>Open source</span><span>Yes (MIT)</span></div>
-        <div class="compare-row"><span>Setup</span><span>Zero-config first run</span></div>
-        <div class="compare-row"><span>Install</span><span>Single binary, no deps</span></div>
-        <div class="compare-row"><span>Self-hosted / local-first</span><span>Yes</span></div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">⚙️</div>
-        <div class="feature-title">Configurable</div>
-        <div class="feature-desc">Adjustable refresh/re-discovery intervals, memory/CPU alert thresholds (warn 75%, critical 85%), and a namespace blocklist.</div>
+        <div class="feature-desc">Drill into any resource's manifest or live logs without leaving the shift-left flow.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🆓</div>
         <div class="feature-title">Actually free</div>
         <div class="feature-desc">Open-source, MIT licensed. No seats, no paywalled features, no "contact sales."</div>
+      </div>
+      <div class="feature-card compare-card">
+        <div class="feature-icon">⚖️</div>
+        <div class="compare-title">vs. paid tools</div>
+        <div class="compare-table">
+          <div class="compare-row"><span>Price</span><span>Free forever</span></div>
+          <div class="compare-row"><span>Open source</span><span>Yes (MIT)</span></div>
+          <div class="compare-row"><span>Setup</span><span>Zero-config first run</span></div>
+          <div class="compare-row"><span>Install</span><span>Single binary, no deps</span></div>
+          <div class="compare-row"><span>Self-hosted / local-first</span><span>Yes</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -130,15 +111,10 @@
   <section id="install" class="section">
     <div class="section-title">Install</div>
     <div class="install-list">
-      <div class="install-tab active" data-tab="curl">
-        <button class="install-tab-header">curl one-liner</button>
-        <div class="install-tab-body">
-          <pre class="install-command">curl -fsSL https://k8srizz.com/install.sh | sh</pre>
-        </div>
-      </div>
-      <div class="install-tab" data-tab="binary">
-        <button class="install-tab-header">Direct binary download</button>
-        <div class="install-tab-body">
+      <pre class="install-command curl-command">curl -fsSL https://k8srizz.com/install.sh | sh</pre>
+      <div class="download-panel">
+        <div class="download-panel-header">Direct binary download</div>
+        <div class="download-panel-body">
           <div class="download-card" data-platform="darwin-arm64">
             <div class="download-row">
               <div class="download-label">🍎 macOS (Apple Silicon)</div>
