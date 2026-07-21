@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>K8s Rizz Check — terminal-flavored Kubernetes observability</title>
+<meta name="description" content="A terminal-flavored dashboard that finds every Kubernetes cluster you're already logged into and tells you, fast, which namespaces are cooked. Free, open source, single binary.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <svg width="30" height="30" viewBox="0 0 72 72">
+        <rect x="2" y="2" width="68" height="68" rx="14" fill="#16181d" stroke="#f4c95d" stroke-width="2"/>
+        <circle cx="36" cy="36" r="20" fill="none" stroke="#f4c95d" stroke-width="2.5"/>
+        <rect x="22" y="30" width="12" height="7" rx="3" fill="#121317" stroke="#f4c95d" stroke-width="2"/>
+        <rect x="38" y="30" width="12" height="7" rx="3" fill="#121317" stroke="#f4c95d" stroke-width="2"/>
+        <line x1="34" y1="33" x2="38" y2="33" stroke="#ef6a6a" stroke-width="2"/>
+        <path d="M27 46 Q36 52 45 46" stroke="#ef6a6a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div class="nav-title">K8s Rizz Check</div>
+    </div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#install">Install</a>
+      <a href="#changelog">Changelog</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/akash-cloudtech/k8s-rizz/wiki" target="_blank" rel="noopener">Docs</a>
+      <a class="btn-github" href="https://github.com/akash-cloudtech/k8s-rizz" target="_blank" rel="noopener">⭐ GitHub</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-kicker">free forever · open source · no seats, no paywall</div>
+    <h1 class="hero-title">K8s Rizz Check</h1>
+    <p class="hero-sub">a terminal-flavored dashboard that finds every provider you're already logged into, and tells you — fast, and a little unhinged — which namespaces are cooked.</p>
+    <div class="hero-terminal">
+      <span>$ <span id="typed-text"></span></span><span class="cursor">&nbsp;</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#install" class="btn btn-primary">Download binary</a>
+      <a href="https://github.com/akash-cloudtech/k8s-rizz" target="_blank" rel="noopener" class="btn btn-secondary">⭐ Star on GitHub</a>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="section-kicker">SEE IT IN ACTION</div>
+    <div class="section-title">Built like a terminal. Behaves like a dashboard.</div>
+    <div class="demo-frame">
+      <div class="demo-titlebar">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+        <div class="demo-tabs">
+          <button class="demo-tab active" data-src="assets/screenshots/demo-namespaces.png">Namespace severity table</button>
+          <button class="demo-tab" data-src="assets/screenshots/demo-tree.png">Resource tree (dynamic CRD tabs)</button>
+        </div>
+      </div>
+      <img id="demo-image" src="assets/screenshots/demo-namespaces.png" alt="K8s Rizz Check screenshot">
+    </div>
+  </section>
+
+  <section id="features" class="section">
+    <div class="section-title">Why people actually use it</div>
+    <div class="section-subtitle">find the cooked namespace before it finds you</div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <div class="feature-title">Auto-detects providers</div>
+        <div class="feature-desc">Finds every cluster you're already logged into — starting with GKE via your existing gcloud login, no separate credentials to manage.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌡️</div>
+        <div class="feature-title">Severity at a glance</div>
+        <div class="feature-desc">Rizzing, Mid, No Rizz, Cooked — one 3-tier good/warn/bad model used everywhere, so you can scan a cluster's health at a glance.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧩</div>
+        <div class="feature-title">Live resource tree</div>
+        <div class="feature-desc">Every namespaced Kind that actually exists in the cluster — core resources and CRDs — shown automatically, with ownership chains resolved so a crash-looping Pod turns its parent Deployment red too.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🖥️</div>
+        <div class="feature-title">Node observability</div>
+        <div class="feature-desc">Cluster-wide summary — total/ready/conditions/CPU/memory/pods — plus an expandable per-node table. Click any node for Status, YAML, and a Cook Book.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📜</div>
+        <div class="feature-title">Status, YAML & logs</div>
+        <div class="feature-desc">Drill into any resource's status fields, full YAML, real namespace Events (newest first), and container logs — with a picker for multi-container Pods.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <div class="feature-title">Refresh-proof state</div>
+        <div class="feature-desc">The URL restores exactly where you were — refresh the page and you're back in the same namespace, resource, and panel.</div>
+      </div>
+      <div class="feature-card compare-card">
+        <div class="feature-icon">⚖️</div>
+        <div class="compare-title">vs. paid tools</div>
+        <div class="compare-row"><span>Price</span><span>Free forever</span></div>
+        <div class="compare-row"><span>Open source</span><span>Yes (MIT)</span></div>
+        <div class="compare-row"><span>Setup</span><span>Zero-config first run</span></div>
+        <div class="compare-row"><span>Install</span><span>Single binary, no deps</span></div>
+        <div class="compare-row"><span>Self-hosted / local-first</span><span>Yes</span></div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚙️</div>
+        <div class="feature-title">Configurable</div>
+        <div class="feature-desc">Adjustable refresh/re-discovery intervals, memory/CPU alert thresholds (warn 75%, critical 85%), and a namespace blocklist.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🆓</div>
+        <div class="feature-title">Actually free</div>
+        <div class="feature-desc">Open-source, MIT licensed. No seats, no paywalled features, no "contact sales."</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="install" class="section">
+    <div class="section-title">Install</div>
+    <div class="install-hint">Single binary for macOS, Linux, and Windows. Nothing to install, no Python or dependencies. <span class="recommended">Download and run</span> — that's it.</div>
+    <div class="install-list">
+      <div class="download-card" data-platform="darwin-arm64">
+        <div class="download-row">
+          <div class="download-label">🍎 macOS (Apple Silicon)</div>
+          <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-darwin-arm64">Download</a>
+        </div>
+      </div>
+      <div class="download-card" data-platform="linux-arm64">
+        <div class="download-row">
+          <div class="download-label">🐧 Linux (arm64)</div>
+          <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-linux-arm64">Download</a>
+        </div>
+      </div>
+      <div class="download-card" data-platform="linux-x86_64">
+        <div class="download-row">
+          <div class="download-label">🐧 Linux (x86_64)</div>
+          <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-linux-x86_64">Download</a>
+        </div>
+      </div>
+      <div class="download-card" data-platform="windows-arm64">
+        <div class="download-row">
+          <div class="download-label">🪟 Windows (ARM64)</div>
+          <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-windows-arm64.exe">Download</a>
+        </div>
+      </div>
+      <div class="download-card" data-platform="windows-x86_64">
+        <div class="download-row">
+          <div class="download-label">🪟 Windows (x86_64)</div>
+          <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-windows-x86_64.exe">Download</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="changelog" class="section">
+    <div class="changelog-wrap">
+      <div class="changelog-kicker">CHANGELOG</div>
+      <div class="changelog-entry"><span class="version">v0.3.0</span> — Dynamic API-group tabs for CRD discovery in the resource tree. Node observability row added.</div>
+      <div class="changelog-entry"><span class="version">v0.2.0</span> — Severity-based namespace filtering, drill-down from namespace → pods → detail.</div>
+      <div class="changelog-entry"><span class="version">v0.1.0</span> — Initial release: provider auto-detection, cluster/project picker, basic namespace table.</div>
+    </div>
+  </section>
+
+  <section id="faq" class="section">
+    <div class="section-title">FAQ</div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question"><span>Is this really free?</span><span class="faq-chevron">+</span></button>
+        <div class="faq-answer">Yes — MIT licensed, no paid tier, no seat limits. Fork it, self-host it, ship it.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question"><span>Which providers are supported?</span><span class="faq-chevron">+</span></button>
+        <div class="faq-answer">GKE today, authenticated via your existing gcloud login — no separate credentials. It discovers clusters via Fleet or direct listing, and connects through whichever path works: Connect Gateway, public endpoint, or internal IP.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question"><span>Does it modify my cluster?</span><span class="faq-chevron">+</span></button>
+        <div class="faq-answer">No — read-only by default. It only queries the Kubernetes API for status, no write operations.</div>
+      </div>
+      <div class="faq-item hidden-item" style="display:none;">
+        <button class="faq-question"><span>Do I need to set up a config file?</span><span class="faq-chevron">+</span></button>
+        <div class="faq-answer">No manual config needed on first run. It detects your gcloud login, finds accessible GCP projects, checks each for GKE clusters, and generates a ready-to-use config automatically.</div>
+      </div>
+      <div class="faq-item hidden-item" style="display:none;">
+        <button class="faq-question"><span>What do I need installed to run it?</span><span class="faq-chevron">+</span></button>
+        <div class="faq-answer">Nothing — it's a single binary for macOS, Linux, and Windows. No Python, no runtime, no dependencies to install.</div>
+      </div>
+      <button class="faq-toggle" id="faq-toggle">show 2 more</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-copy">© 2026 K8s Rizz Check · MIT licensed · built different</div>
+    <div class="footer-links">
+      <a href="https://github.com/akash-cloudtech/k8s-rizz" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/akash-cloudtech/k8s-rizz/wiki" target="_blank" rel="noopener">Docs</a>
+      <a href="https://github.com/akash-cloudtech/k8s-rizz/issues" target="_blank" rel="noopener">Issues</a>
+      <a href="https://github.com/akash-cloudtech/k8s-rizz/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
+    </div>
+  </footer>
+
+</div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

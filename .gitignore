@@ -1,0 +1,21 @@
+# OS cruft
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Claude Design tooling artifacts (not part of the published site)
+.thumbnail/
+*.dc.html
+handoff/
+screenshots/demo-*.png.orig
+support.js
+image-slot.js
