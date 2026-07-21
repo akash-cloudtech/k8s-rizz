@@ -14,8 +14,10 @@ download buttons on the site have something stable to point at.
 ```
 index.html            page markup
 assets/css/style.css  styles (dark/light theme via CSS custom properties)
-assets/js/main.js     theme toggle, hero typing animation, demo tabs, FAQ accordion, OS-aware download highlighting
+assets/js/main.js     theme toggle, hero typing animation, demo carousel, install/FAQ accordions, OS-aware download highlighting
 assets/screenshots/   product screenshots used in the "see it in action" section
+install.sh            OS/arch-detecting installer, served at k8srizz.com/install.sh for the curl one-liner on the site
+favicon.png           site favicon
 CNAME                 custom domain for GitHub Pages (k8srizz.com)
 ```
 

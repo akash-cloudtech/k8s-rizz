@@ -46,14 +46,31 @@
     }, 140);
   }
 
-  // ---- Demo screenshot tabs ----
+  // ---- Scroll to top on logo click ----
+  var logoLink = document.getElementById('logo-link');
+  if (logoLink) {
+    logoLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // ---- Demo screenshot tabs (highlight only; filmstrip auto-scrolls) ----
   var demoTabs = document.querySelectorAll('.demo-tab');
-  var demoImage = document.getElementById('demo-image');
   demoTabs.forEach(function (tab) {
     tab.addEventListener('click', function () {
       demoTabs.forEach(function (t) { t.classList.remove('active'); });
       tab.classList.add('active');
-      if (demoImage) demoImage.src = tab.getAttribute('data-src');
+    });
+  });
+
+  // ---- Install accordion ----
+  var installTabs = document.querySelectorAll('.install-tab');
+  installTabs.forEach(function (tab) {
+    var header = tab.querySelector('.install-tab-header');
+    header.addEventListener('click', function () {
+      installTabs.forEach(function (t) { t.classList.remove('active'); });
+      tab.classList.add('active');
     });
   });
 

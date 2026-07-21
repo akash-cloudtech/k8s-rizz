@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>K8s Rizz Check — terminal-flavored Kubernetes observability</title>
 <meta name="description" content="A terminal-flavored dashboard that finds every Kubernetes cluster you're already logged into and tells you, fast, which namespaces are cooked. Free, open source, single binary.">
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" id="top">
 
   <nav class="nav">
-    <div class="nav-brand">
+    <a href="#top" class="nav-brand" id="logo-link">
       <svg width="30" height="30" viewBox="0 0 72 72">
         <rect x="2" y="2" width="68" height="68" rx="14" fill="#16181d" stroke="#f4c95d" stroke-width="2"/>
         <circle cx="36" cy="36" r="20" fill="none" stroke="#f4c95d" stroke-width="2.5"/>
@@ -20,8 +21,8 @@
         <line x1="34" y1="33" x2="38" y2="33" stroke="#ef6a6a" stroke-width="2"/>
         <path d="M27 46 Q36 52 45 46" stroke="#ef6a6a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
       </svg>
-      <div class="nav-title">K8s Rizz Check</div>
-    </div>
+      <div class="nav-title">K8s Rizz</div>
+    </a>
     <div class="nav-links">
       <a href="#features">Features</a>
       <a href="#install">Install</a>
@@ -55,11 +56,18 @@
         <div class="dot dot-yellow"></div>
         <div class="dot dot-green"></div>
         <div class="demo-tabs">
-          <button class="demo-tab active" data-src="assets/screenshots/demo-namespaces.png">Namespace severity table</button>
-          <button class="demo-tab" data-src="assets/screenshots/demo-tree.png">Resource tree (dynamic CRD tabs)</button>
+          <button class="demo-tab active" data-index="0">Namespace severity table</button>
+          <button class="demo-tab" data-index="1">Resource tree (dynamic CRD tabs)</button>
         </div>
       </div>
-      <img id="demo-image" src="assets/screenshots/demo-namespaces.png" alt="K8s Rizz Check screenshot">
+      <div class="demo-scroll">
+        <div class="demo-track" id="demo-track">
+          <img src="assets/screenshots/demo-namespaces.png" alt="Namespace severity table">
+          <img src="assets/screenshots/demo-tree.png" alt="Resource tree (dynamic CRD tabs)">
+          <img src="assets/screenshots/demo-namespaces.png" alt="Namespace severity table" aria-hidden="true">
+          <img src="assets/screenshots/demo-tree.png" alt="Resource tree (dynamic CRD tabs)" aria-hidden="true">
+        </div>
+      </div>
     </div>
   </section>
 
@@ -121,36 +129,46 @@
 
   <section id="install" class="section">
     <div class="section-title">Install</div>
-    <div class="install-hint">Single binary for macOS, Linux, and Windows. Nothing to install, no Python or dependencies. <span class="recommended">Download and run</span> — that's it.</div>
     <div class="install-list">
-      <div class="download-card" data-platform="darwin-arm64">
-        <div class="download-row">
-          <div class="download-label">🍎 macOS (Apple Silicon)</div>
-          <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-darwin-arm64">Download</a>
+      <div class="install-tab active" data-tab="curl">
+        <button class="install-tab-header">curl one-liner</button>
+        <div class="install-tab-body">
+          <pre class="install-command">curl -fsSL https://k8srizz.com/install.sh | sh</pre>
         </div>
       </div>
-      <div class="download-card" data-platform="linux-arm64">
-        <div class="download-row">
-          <div class="download-label">🐧 Linux (arm64)</div>
-          <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-linux-arm64">Download</a>
-        </div>
-      </div>
-      <div class="download-card" data-platform="linux-x86_64">
-        <div class="download-row">
-          <div class="download-label">🐧 Linux (x86_64)</div>
-          <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-linux-x86_64">Download</a>
-        </div>
-      </div>
-      <div class="download-card" data-platform="windows-arm64">
-        <div class="download-row">
-          <div class="download-label">🪟 Windows (ARM64)</div>
-          <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-windows-arm64.exe">Download</a>
-        </div>
-      </div>
-      <div class="download-card" data-platform="windows-x86_64">
-        <div class="download-row">
-          <div class="download-label">🪟 Windows (x86_64)</div>
-          <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-windows-x86_64.exe">Download</a>
+      <div class="install-tab" data-tab="binary">
+        <button class="install-tab-header">Direct binary download</button>
+        <div class="install-tab-body">
+          <div class="download-card" data-platform="darwin-arm64">
+            <div class="download-row">
+              <div class="download-label">🍎 macOS (Apple Silicon)</div>
+              <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-darwin-arm64">Download</a>
+            </div>
+          </div>
+          <div class="download-card" data-platform="linux-arm64">
+            <div class="download-row">
+              <div class="download-label">🐧 Linux (arm64)</div>
+              <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-linux-arm64">Download</a>
+            </div>
+          </div>
+          <div class="download-card" data-platform="linux-x86_64">
+            <div class="download-row">
+              <div class="download-label">🐧 Linux (x86_64)</div>
+              <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-linux-x86_64">Download</a>
+            </div>
+          </div>
+          <div class="download-card" data-platform="windows-arm64">
+            <div class="download-row">
+              <div class="download-label">🪟 Windows (ARM64)</div>
+              <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-windows-arm64.exe">Download</a>
+            </div>
+          </div>
+          <div class="download-card" data-platform="windows-x86_64">
+            <div class="download-row">
+              <div class="download-label">🪟 Windows (x86_64)</div>
+              <a class="download-btn" href="https://github.com/akash-cloudtech/k8s-rizz/releases/latest/download/k8s-rizz-check-windows-x86_64.exe">Download</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

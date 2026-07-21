@@ -36,6 +36,10 @@ html {
   scroll-behavior: smooth;
 }
 
+#features, #install, #changelog, #faq {
+  scroll-margin-top: 80px;
+}
+
 body {
   margin: 0;
   background: var(--bg);
@@ -79,11 +83,17 @@ a:hover {
   border-bottom: 1px solid var(--border);
   flex-wrap: wrap;
   gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg);
 }
 .nav-brand {
   display: flex;
   align-items: center;
   gap: 10px;
+  text-decoration: none;
+  cursor: pointer;
 }
 .nav-title {
   font-weight: 700;
@@ -167,6 +177,10 @@ a:hover {
 @keyframes blinkCursor {
   0%, 49% { border-color: var(--accent); }
   50%, 100% { border-color: transparent; }
+}
+@keyframes demoScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 .hero-ctas {
   display: flex;
@@ -265,10 +279,24 @@ a:hover {
   color: var(--accent);
   border-bottom-color: var(--accent);
 }
-.demo-frame img {
+.demo-scroll {
+  overflow: hidden;
+}
+.demo-track {
+  display: flex;
+  width: max-content;
+  animation: demoScroll 24s linear infinite;
+}
+.demo-track img {
   display: block;
-  width: 100%;
+  width: 1000px;
   height: auto;
+  flex: 0 0 auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .demo-track {
+    animation: none;
+  }
 }
 
 /* Features */
@@ -328,16 +356,47 @@ a:hover {
   flex-direction: column;
   gap: 10px;
 }
-.install-hint {
-  text-align: center;
-  font-size: 12.5px;
-  color: var(--muted);
-  max-width: 560px;
-  margin: 0 auto 32px;
+.install-tab {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
 }
-.install-hint .recommended {
-  color: var(--accent);
+.install-tab.active {
+  border-color: var(--accent);
+}
+.install-tab-header {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  background: var(--panel);
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
   font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+}
+.install-tab.active .install-tab-header {
+  color: var(--accent);
+}
+.install-tab-body {
+  display: none;
+  padding: 14px 16px;
+  background: var(--panel-alt);
+}
+.install-tab.active .install-tab-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.install-command {
+  margin: 0;
+  font-family: inherit;
+  font-size: 12.5px;
+  color: var(--accent-text);
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 .download-card {
   border: 1px solid var(--border);
