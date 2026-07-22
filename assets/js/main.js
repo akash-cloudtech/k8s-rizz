@@ -178,4 +178,66 @@
       if (label) label.appendChild(badge);
     }
   }
+
+  // ---- Copy-pasteable install commands per platform ----
+  function copyText(text, onDone) {
+    var fallback = function () {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      onDone();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(onDone).catch(fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  var allDownloadCards = document.querySelectorAll('.download-card');
+  allDownloadCards.forEach(function (card) {
+    var btn = card.querySelector('.download-btn');
+    var shellWrap = card.querySelector('.download-shell');
+    var labelEl = card.querySelector('.download-label');
+    if (!btn || !shellWrap || !labelEl) return;
+
+    var href = btn.getAttribute('href');
+    var file = href.split('/').pop();
+    var isWindows = file.indexOf('windows') !== -1;
+    var command = isWindows
+      ? 'curl.exe -LO ' + href + '\nMove-Item ' + file + ' "$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\k8s-rizz-check.exe"\nk8s-rizz-check --help'
+      : 'curl -LO ' + href + '\nchmod +x ' + file + '\nsudo mv ' + file + ' /usr/local/bin/k8s-rizz-check\nk8s-rizz-check --help';
+
+    var pre = document.createElement('pre');
+    pre.textContent = command;
+    var copyBtn = document.createElement('button');
+    copyBtn.type = 'button';
+    copyBtn.className = 'download-copy-btn';
+    copyBtn.textContent = 'copy';
+    shellWrap.appendChild(pre);
+    shellWrap.appendChild(copyBtn);
+
+    var copyTimer;
+    copyBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      copyText(command, function () {
+        copyBtn.textContent = 'copied ✓';
+        clearTimeout(copyTimer);
+        copyTimer = setTimeout(function () { copyBtn.textContent = 'copy'; }, 1500);
+      });
+    });
+
+    labelEl.addEventListener('click', function () {
+      var isOpen = card.classList.contains('open');
+      allDownloadCards.forEach(function (c) { c.classList.remove('open'); });
+      if (!isOpen) card.classList.add('open');
+    });
+  });
+
+  if (detected && card) card.classList.add('open');
 })();
