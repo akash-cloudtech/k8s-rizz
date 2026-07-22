@@ -103,44 +103,52 @@
     });
   }
 
-  // ---- Changelog: latest GitHub release ----
+  // ---- Changelog: recent GitHub releases ----
+  var CHANGELOG_LIMIT = 5;
   var changelogEntry = document.getElementById('changelog-entry');
   if (changelogEntry) {
-    fetch('https://api.github.com/repos/akash-cloudtech/k8s-rizz/releases/latest')
+    fetch('https://api.github.com/repos/akash-cloudtech/k8s-rizz/releases?per_page=' + CHANGELOG_LIMIT)
       .then(function (res) {
-        if (!res.ok) throw new Error('release fetch failed');
+        if (!res.ok) throw new Error('releases fetch failed');
         return res.json();
       })
-      .then(function (release) {
-        var date = new Date(release.published_at).toLocaleDateString('en-US', {
-          month: 'short', day: 'numeric', year: 'numeric',
-        });
-        var title = 'Release notes';
-        if (release.body) {
-          var firstLine = release.body.split('\n')[0].replace(/^#+\s*/, '').trim();
-          if (firstLine) title = firstLine;
-        }
+      .then(function (releases) {
+        if (!releases.length) throw new Error('no releases');
+        var wrap = changelogEntry.parentNode;
+        releases.forEach(function (release) {
+          var date = new Date(release.published_at).toLocaleDateString('en-US', {
+            month: 'short', day: 'numeric', year: 'numeric',
+          });
+          var title = 'Release notes';
+          if (release.body) {
+            var firstLine = release.body.split('\n')[0].replace(/^#+\s*/, '').trim();
+            if (firstLine) title = firstLine;
+          }
 
-        changelogEntry.textContent = '';
-        var version = document.createElement('span');
-        version.className = 'version';
-        version.textContent = release.tag_name;
-        changelogEntry.appendChild(version);
-        changelogEntry.appendChild(document.createTextNode(' · ' + date + ' — '));
-        var link = document.createElement('a');
-        link.href = release.html_url;
-        link.target = '_blank';
-        link.rel = 'noopener';
-        link.textContent = title;
-        changelogEntry.appendChild(link);
+          var entry = document.createElement('div');
+          entry.className = 'changelog-entry';
+          var version = document.createElement('span');
+          version.className = 'version';
+          version.textContent = release.tag_name;
+          entry.appendChild(version);
+          entry.appendChild(document.createTextNode(' · ' + date + ' — '));
+          var link = document.createElement('a');
+          link.href = release.html_url;
+          link.target = '_blank';
+          link.rel = 'noopener';
+          link.textContent = title;
+          entry.appendChild(link);
+          wrap.insertBefore(entry, changelogEntry);
+        });
+        wrap.removeChild(changelogEntry);
       })
       .catch(function () {
         changelogEntry.textContent = '';
         var link = document.createElement('a');
-        link.href = 'https://github.com/akash-cloudtech/k8s-rizz/releases/latest';
+        link.href = 'https://github.com/akash-cloudtech/k8s-rizz/releases';
         link.target = '_blank';
         link.rel = 'noopener';
-        link.textContent = 'See latest release on GitHub →';
+        link.textContent = 'See releases on GitHub →';
         changelogEntry.appendChild(link);
       });
   }

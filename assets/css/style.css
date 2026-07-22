@@ -439,15 +439,15 @@ a:hover {
   max-width: 720px;
   margin: 0 auto;
   display: flex;
-  align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 8px;
 }
 .changelog-kicker {
   font-size: 13px;
   font-weight: 700;
   color: var(--dim);
   letter-spacing: 0.4px;
+  margin-bottom: 4px;
 }
 .changelog-entry {
   font-size: 12px;
