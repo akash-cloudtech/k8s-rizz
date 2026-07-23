@@ -131,7 +131,7 @@
           version.className = 'version';
           version.textContent = release.tag_name;
           entry.appendChild(version);
-          entry.appendChild(document.createTextNode(' · ' + date + ' — '));
+          entry.appendChild(document.createTextNode(' · ' + date + ' - '));
           var link = document.createElement('a');
           link.href = release.html_url;
           link.target = '_blank';

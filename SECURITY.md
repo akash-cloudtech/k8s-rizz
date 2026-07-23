@@ -3,7 +3,7 @@
 ## Scope
 
 This repository (`akash-cloudtech/k8s-rizz`) is the public showcase/marketing
-website for **K8s Rizz Check** — a static site with no backend, no build
+website for **K8s Rizz Check**, a static site with no backend, no build
 step, and no user data collection. It also mirrors release binaries for the
 K8s Rizz Check CLI as public GitHub Releases assets.
 
@@ -14,7 +14,7 @@ This policy covers both:
 
 ## Supported Versions
 
-The website has no versioned releases of its own — `main` is continuously
+The website has no versioned releases of its own: `main` is continuously
 deployed and always represents the current live site, so there is nothing to
 select a "supported version" from. For the K8s Rizz Check CLI, only the
 [latest release](../../releases/latest) is supported.

@@ -1,6 +1,6 @@
 # k8s-rizz
 
-This repo is the public showcase/marketing website for **K8s Rizz Check** — a
+This repo is the public showcase/marketing website for **K8s Rizz Check**, a
 local Kubernetes cluster observability dashboard. It's a static site only:
 no backend, no build step, no framework.
 
@@ -23,7 +23,7 @@ CNAME                                                   custom domain for GitHub
 
 ## Running locally
 
-No build step — just serve the directory root and open it:
+No build step, just serve the directory root and open it:
 
 ```sh
 python3 -m http.server 8000
